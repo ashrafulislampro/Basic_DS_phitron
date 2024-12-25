@@ -13,9 +13,15 @@ public:
         this->Prev = NULL;
     }
 };
-void insert_at_head(Node *&head, int val)
+void insert_at_head(Node *&head, Node *&tail, int val)
 {
     Node *newnode = new Node(val);
+    if (head == nullptr)
+    {
+        head = newnode;
+        tail = newnode;
+        return;
+    }
     newnode->Next = head;
     head->Prev = newnode;
     head = newnode;
@@ -32,16 +38,18 @@ void print_linked_list(Node *head)
 }
 int main()
 {
-    Node *head = new Node(10);
-    Node *a = new Node(20);
-    Node *tail = new Node(30);
+    Node *head = nullptr;
+    // Node *a = new Node(20);
+    Node *tail = nullptr;
 
-    head->Next = a;
-    a->Prev = head;
+    // head->Next = a;
+    // a->Prev = head;
 
-    a->Next = tail;
-    tail->Prev = a;
-    insert_at_head(head, 100);
+    // a->Next = tail;
+    // tail->Prev = a;
+
+    insert_at_head(head, tail, 100);
+    insert_at_head(head, tail, 200);
     print_linked_list(head);
     return 0;
 }
