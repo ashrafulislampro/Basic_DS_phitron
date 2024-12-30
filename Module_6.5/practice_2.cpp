@@ -33,8 +33,6 @@ bool hashDuplicate(Node *head)
     Node *temp = head;
     while (temp != nullptr)
     {
-        // cout << (seen.find(temp->val) != seen.end()) << " " << temp->val << " = " << seen.end() << endl;
-
         if (seen.find(temp->val) != seen.end())
         {
             return true; // duplicate found
