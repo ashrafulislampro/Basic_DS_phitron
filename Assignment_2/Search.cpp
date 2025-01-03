@@ -26,20 +26,25 @@ void insert_at_tail(Node *&head, Node *&tail, int val)
     tail = newnode;
 }
 
-int search(Node *head, int item)
+void search(Node *head, int item)
 {
     Node *tmp = head;
     int index = 0;
-    for (Node *i = tmp; i != NULL; i = i->Next)
+    bool isTrue = true;
+    for (Node *i = tmp; i != NULL && isTrue; i = i->Next)
     {
         if (tmp->val == item)
         {
-            return index;
+            // return index;
+            cout << index << endl;
+            isTrue = false;
         }
         index++;
         tmp = tmp->Next;
     }
-    return -1;
+    // return -1;
+    if (isTrue)
+        cout << -1 << endl;
 };
 int main()
 {
@@ -55,7 +60,8 @@ int main()
             insert_at_tail(head, tail, val);
         }
         cin >> item;
-        cout << search(head, item) << endl;
+        // cout <<  << endl;
+        search(head, item);
     }
 
     return 0;
