@@ -39,23 +39,23 @@ void print_list(ListNode *head)
 
 void reordered_list(ListNode *&head, ListNode *&tail)
 {
-    ListNode *list_1 = head;
+    ListNode *tmp = head;
     ListNode *list_2 = head;
     int j = 0;
-    for (ListNode *i = list_1; i != nullptr; i = i->next)
+    for (ListNode *i = tmp; i != nullptr; i = i->next)
     {
         ++j;
         if (j % 2 != 0)
         {
-            ListNode *aux = list_1->next;
-            list_1->next = aux->next;
+            ListNode *aux = tmp->next;
+            tmp->next = aux->next;
 
-            list_1 = list_1->next;
+            tmp = tmp->next;
             // list_1 = nullptr;
         }
         else
         {
-            list_1 = list_1->next;
+            tmp = tmp->next;
         }
     }
     print_list(head);
