@@ -27,14 +27,10 @@ Node *input_tree()
     queue<Node *> q;
     if (root)
         q.push(root);
-
-    while(!q.empty())
+    while (!q.empty())
     {
-        // step-1 ber kre nia asha
         Node *p = q.front();
         q.pop();
-
-        // step-2 oi node nia kaj kra
         int l, r;
         cin >> l >> r;
         Node *myLeft, *myRight;
@@ -50,45 +46,71 @@ Node *input_tree()
 
         p->left = myLeft;
         p->right = myRight;
+
         if (p->left)
             q.push(p->left);
         if (p->right)
             q.push(p->right);
     }
+
     return root;
 }
 
-void level_order(Node *root)
+int binary_tree_depth(Node *root)
 {
     if (root == nullptr)
     {
-        cout << "No Tree" << endl;
-        return;
+        return 0;
+    }
+    if (root->left == nullptr && root->right == nullptr)
+    {
+        return 1;
     }
 
+    int l = binary_tree_depth(root->left);
+    int r = binary_tree_depth(root->right);
+
+    return max(l, r) + 1;
+}
+void Perfect_Binary_Tree(Node *root, int total_nodes)
+{
+
+    int node_count = 0;
     queue<Node *> q;
-    q.push(root);
+    if (root)
+        q.push(root);
+
     while (!q.empty())
     {
-        // step-1 ber kre nia
+        // step-1
         Node *p = q.front();
         q.pop();
-        // step-2 oi node nia kaj
-        cout << p->val << " ";
-        // step-3 children node push
+
+        // step-2
+        node_count++;
+        // step-3
         if (p->left)
-        {
             q.push(p->left);
-        }
         if (p->right)
-        {
             q.push(p->right);
-        }
+    }
+
+   
+    if (node_count == total_nodes)
+    {
+        cout << "YES" << endl;
+    }
+    else
+    {
+        cout << "NO" << endl;
     }
 }
 int main()
 {
     Node *root = input_tree();
-    level_order(root);
+    int ht = binary_tree_depth(root);
+    int total_nodes = pow(2, ht) - 1;
+
+    Perfect_Binary_Tree(root, total_nodes);
     return 0;
 }

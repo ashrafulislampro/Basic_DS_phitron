@@ -27,14 +27,10 @@ Node *input_tree()
     queue<Node *> q;
     if (root)
         q.push(root);
-
-    while(!q.empty())
+    while (!q.empty())
     {
-        // step-1 ber kre nia asha
         Node *p = q.front();
         q.pop();
-
-        // step-2 oi node nia kaj kra
         int l, r;
         cin >> l >> r;
         Node *myLeft, *myRight;
@@ -50,45 +46,56 @@ Node *input_tree()
 
         p->left = myLeft;
         p->right = myRight;
+
         if (p->left)
             q.push(p->left);
         if (p->right)
             q.push(p->right);
     }
+
     return root;
 }
 
-void level_order(Node *root)
+void leaf_nodes(Node *root)
 {
-    if (root == nullptr)
-    {
-        cout << "No Tree" << endl;
-        return;
-    }
+    vector<int> vec;
 
+    if (root == nullptr)
+        return;
     queue<Node *> q;
-    q.push(root);
+    if (root)
+        q.push(root);
+
     while (!q.empty())
     {
-        // step-1 ber kre nia
+        // step-1
         Node *p = q.front();
         q.pop();
-        // step-2 oi node nia kaj
-        cout << p->val << " ";
-        // step-3 children node push
+
+        // step-2
+        if ((p->left == nullptr && p->right == nullptr))
+        {
+            vec.push_back(p->val);
+        }
+
+        // step-3
         if (p->left)
-        {
             q.push(p->left);
-        }
         if (p->right)
-        {
             q.push(p->right);
-        }
     }
-}
+
+    sort(vec.begin(), vec.end(), greater<int>());
+    int len = vec.size();
+    cout<<vec[0];
+    for(int i = 1; i < len; i++){
+        cout<<" "<<vec[i];
+    }
+};
+
 int main()
 {
     Node *root = input_tree();
-    level_order(root);
+    leaf_nodes(root);    
     return 0;
 }

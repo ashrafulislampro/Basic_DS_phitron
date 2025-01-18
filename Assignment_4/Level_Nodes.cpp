@@ -13,7 +13,6 @@ public:
         this->right = NULL;
     }
 };
-
 Node *input_tree()
 {
     Node *root;
@@ -27,14 +26,12 @@ Node *input_tree()
     queue<Node *> q;
     if (root)
         q.push(root);
-
-    while(!q.empty())
+    while (!q.empty())
     {
-        // step-1 ber kre nia asha
+        // step-1
         Node *p = q.front();
         q.pop();
-
-        // step-2 oi node nia kaj kra
+        // step-2
         int l, r;
         cin >> l >> r;
         Node *myLeft, *myRight;
@@ -42,53 +39,72 @@ Node *input_tree()
             myLeft = nullptr;
         else
             myLeft = new Node(l);
-
         if (r == -1)
             myRight = nullptr;
         else
             myRight = new Node(r);
 
+        // step-3
         p->left = myLeft;
         p->right = myRight;
         if (p->left)
             q.push(p->left);
+
         if (p->right)
             q.push(p->right);
     }
     return root;
 }
-
-void level_order(Node *root)
+int binary_tree_height(Node *root)
 {
     if (root == nullptr)
     {
-        cout << "No Tree" << endl;
-        return;
+        return 0;
+    }
+    if (root->left == nullptr && root->right == nullptr)
+    {
+        return 0;
+    }
+    int l = binary_tree_height(root->left);
+    int r = binary_tree_height(root->right);
+
+    return max(l, r) + 1;
+}
+void Level_Nodes(Node* root, int x){
+    queue<pair<Node*, int>> q;
+    if(root) q.push({root, 0});
+    while(!q.empty()){
+        // step-1
+        pair<Node*, int> parent = q.front();
+        q.pop();
+
+        // step-2
+        Node* node = parent.first;
+        int level = parent.second;
+        if(level == x){
+            cout<<node->val<<" ";
+        }
+        // step-3
+        if(node->left){
+            q.push({node->left, level+1});
+        }
+        if(node->right){
+            q.push({node->right, level+1});
+        }
+
     }
 
-    queue<Node *> q;
-    q.push(root);
-    while (!q.empty())
-    {
-        // step-1 ber kre nia
-        Node *p = q.front();
-        q.pop();
-        // step-2 oi node nia kaj
-        cout << p->val << " ";
-        // step-3 children node push
-        if (p->left)
-        {
-            q.push(p->left);
-        }
-        if (p->right)
-        {
-            q.push(p->right);
-        }
-    }
-}
+};
 int main()
 {
     Node *root = input_tree();
-    level_order(root);
+    int ht = binary_tree_height(root);
+    int x;
+    cin>>x;
+    if(x >= 0 && x <= ht){
+        Level_Nodes(root, x);
+    }else{
+        cout<<"Invalid"<<endl;
+    }
     return 0;
 }
