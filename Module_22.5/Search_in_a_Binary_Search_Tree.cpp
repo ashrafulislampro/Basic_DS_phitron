@@ -22,15 +22,14 @@ Node *input_tree()
         root = nullptr;
     else
         root = new Node(val);
-
     queue<Node *> q;
     if (root)
         q.push(root);
     while (!q.empty())
     {
+        // step-1
         Node *p = q.front();
         q.pop();
-
         Node *myLeft, *myRight;
         int l, r;
         cin >> l >> r;
@@ -54,8 +53,9 @@ Node *input_tree()
     }
     return root;
 }
-void level_order(Node *root)
+void tree_print(Node *root)
 {
+
     if (!root)
         return;
     queue<Node *> q;
@@ -63,43 +63,51 @@ void level_order(Node *root)
         q.push(root);
     while (!q.empty())
     {
+        // step-1
         Node *p = q.front();
         q.pop();
+        // step-2
         cout << p->val << " ";
+        // step-3
         if (p->left)
             q.push(p->left);
         if (p->right)
             q.push(p->right);
     }
 }
-void insert_node(Node *&root, int val)
+void search_in_BST(Node *root, int item)
 {
     if (!root)
-    {
-        root = new Node(val);
         return;
-    };
-    if (val < root->val)
+    if (root->val == item)
     {
-        if (root->left == nullptr)
-            root->left = new Node(val);
-        else
-            insert_node(root->left, val);
+        cout << root->val << " ";
+        if (root->left)
+        {
+            cout << root->left->val << " ";
+            search_in_BST(root->left, item);
+        }
+        if (root->right)
+        {
+            cout << root->right->val << " ";
+            search_in_BST(root->right, item);
+        }
+    }
+    else if (root->val > item)
+    {
+        search_in_BST(root->left, item);
     }
     else
     {
-        if (root->right == nullptr)
-            root->right = new Node(val);
-        else
-            insert_node(root->right, val);
+        search_in_BST(root->right, item);
     }
 }
 int main()
 {
     Node *root = input_tree();
-    int val;
-    cin >> val;
-    insert_node(root, val);
-    level_order(root);
+    int item;
+    cin >> item;
+    search_in_BST(root, item);
+
     return 0;
 }

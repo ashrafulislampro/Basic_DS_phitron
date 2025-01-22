@@ -13,6 +13,7 @@ public:
         this->right = NULL;
     }
 };
+
 Node *input_tree()
 {
     Node *root;
